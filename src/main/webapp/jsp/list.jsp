@@ -39,8 +39,8 @@
 		<td>${crms.email}</td>
 		<td>${crms.description}</td>
 		<td>
-			<a href="<c:url value='/jsp/edit.jsp'/>">编辑</a>
-			<a href="<c:url value='/jsp/msg.jsp'/>">删除</a>
+			<a href="<c:url value='/load?id=${crms.cid}'/>">编辑</a>
+			<a href="<c:url value='/delete?id=${crms.cid}'/>">删除</a>
 		</td>
 	</tr>
 	</c:forEach>

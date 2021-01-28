@@ -18,4 +18,16 @@ public class CustomerService {
     public List<Customer> findAll(){
         return dao.findAll();
     }
+    public Customer load(String cid){
+        return dao.load(cid);
+    }
+    public void editCustomer(Customer c){
+        dao.edit(c);
+    }
+    public void delete(String cid) {
+        dao.delete(cid);
+    }
+    public List query(Customer customer){
+        return dao.query(customer);
+    }
 }

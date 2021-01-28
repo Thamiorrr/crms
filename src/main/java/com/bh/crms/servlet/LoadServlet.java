@@ -10,30 +10,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * @author Hasee
- * @Data 2021/1/27 16:37
+ * @Data 2021/1/28 11:21
  */
-@WebServlet(name = "FindAllServlet",urlPatterns = "/findall")
-
-public class FindAllServlet extends HttpServlet {
-    private CustomerService customerService = new CustomerService();
-
+@WebServlet(name = "LoadServlet",urlPatterns = "/load")
+public class LoadServlet extends HttpServlet {
+    CustomerService customerService = new CustomerService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Customer> list = null;
-        list = customerService.findAll();
-        req.setAttribute("crmsList",list);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("jsp/list.jsp");
+        String cid = req.getParameter("id");
+        Customer customer = null;
+        customer = customerService.load(cid);
+        req.setAttribute("crms",customer);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("jsp/edit.jsp");
         dispatcher.forward(req,resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        System.out.println("post");
     }
-
-
 }

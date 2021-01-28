@@ -12,10 +12,10 @@
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
-	<link rel="stylesheet" type="text/css" href="<c:url value='/jsp/jquery.datepick.css'/>">
+
+<%--	<link rel="stylesheet" type="text/css" href="styles.css">--%>
+
+	<link rel="stylesheet" type="text/css" href="<c:url value='/jsp/jquery/jquery.datepick.css'/>">
 	<script type="text/javascript" src="<c:url value='/jsp/jquery/jquery-1.5.1.js'/>"></script>
 	<script type="text/javascript" src="<c:url value='/jsp/jquery/jquery.datepick.js'/>"></script>
 	<script type="text/javascript" src="<c:url value='/jsp/jquery/jquery.datepick-zh-CN.js'/>"></script>
@@ -57,7 +57,7 @@
   
   <body>
 <h3 align="center">添加客户</h3>
-<form action="<c:url value='/customer'/>" method="post">
+<form action="<c:url value='/edit'/>" method="post">
 <table border="0" align="center" width="40%" style="margin-left: 100px;">
 	<tr>
 		<td width="100px">客户名称</td>
@@ -126,7 +126,5 @@
 	</tr>
 </table>
 </form>
-<a href="customer">Hello Servlet</a>
-
   </body>
 </html>
