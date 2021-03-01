@@ -46,5 +46,22 @@
 	</c:forEach>
 
 </table>
+	<a href="<c:url value='/findall?pc=1'/>">1</a>
+	<a href="<c:url value='/findall?pc=2'/>">2</a>
+	<a href="<c:url value='/findall?pc=3'/>">3</a>
+	<a href="<c:url value='/findall?pc=4'/>">4</a>
+	<a href="<c:url value='/findall?pc=5'/>">5</a>
+	<a href="<c:url value='/findall?pc=6'/>">6</a>
+	<a href="<c:url value='/findall?pc=7'/>">7</a>
+	<a href="<c:url value='/findall?pc=8'/>">8</a>
+	<a href="<c:url value='/findall?pc=9'/>">9</a>
+	<a href="<c:url value='/findall?pc=10'/>">10</a>
+	<a href="<c:url value='/findall?pc=${pc-1}'/>">上一页</a>
+	<a href="<c:url value='/findall?pc=${pc+1}'/>">下一页</a>
+	<span>总页面： ${pagenum}</span>>
+
+
+	<span>当前页面： ${pc}</span>>
+
   </body>
 </html>

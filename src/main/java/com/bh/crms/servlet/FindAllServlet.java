@@ -23,9 +23,17 @@ public class FindAllServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String pc = req.getParameter("pc");
+
         List<Customer> list = null;
-        list = customerService.findAll();
+        long count = -1;
+        list = customerService.findAll(pc);
+        count = customerService.findAllCount();
+        int pagenum = (int)count;
+        pagenum = pagenum%10==0?pagenum/10:pagenum/10+1;
         req.setAttribute("crmsList",list);
+        req.setAttribute("pc",pc);
+        req.setAttribute("pagenum",pagenum);
         RequestDispatcher dispatcher = req.getRequestDispatcher("jsp/list.jsp");
         dispatcher.forward(req,resp);
     }

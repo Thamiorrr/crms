@@ -15,10 +15,10 @@
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-	<link rel="stylesheet" type="text/css" href="<c:url value='/jquery/jquery.datepick.css'/>">
-	<script type="text/javascript" src="<c:url value='/jquery/jquery-1.5.1.js'/>"></script>
-	<script type="text/javascript" src="<c:url value='/jquery/jquery.datepick.js'/>"></script>
-	<script type="text/javascript" src="<c:url value='/jquery/jquery.datepick-zh-CN.js'/>"></script>
+	<link rel="stylesheet" type="text/css" href="<c:url value='/jsp/jquery/jquery.datepick.css'/>">
+	<script type="text/javascript" src="<c:url value='/jsp/jquery/jquery-1.5.1.js'/>"></script>
+	<script type="text/javascript" src="<c:url value='/jsp/jquery/jquery.datepick.js'/>"></script>
+	<script type="text/javascript" src="<c:url value='/jsp/jquery/jquery.datepick-zh-CN.js'/>"></script>
 	
 <script type="text/javascript">
 	$(function() {

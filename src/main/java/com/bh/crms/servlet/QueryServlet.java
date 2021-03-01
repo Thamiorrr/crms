@@ -24,21 +24,70 @@ public class QueryServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        /**
+         * 1条件封装成对象 最多四个
+         * 2调用方法完成查询
+         * 3保存查询结果到request域
+         * 4转发至jsp
+         */
+        String pc = req.getParameter("pc");
         String cname = req.getParameter("cname");
         String gender = req.getParameter("gender");
         String email = req.getParameter("email");
         String cellphone = req.getParameter("cellphone");
         Customer customer = new Customer(cname,gender,cellphone,email);
 
-//        System.out.println("传入对象"+cname);
-//        System.out.println("传入对象"+gender);
-//        System.out.println("传入对象"+cellphone);
-//        System.out.println("传入对象"+email);
-        List<Customer> list = null;
 
-        list = customerService.query(customer);
+        System.out.println("传入对象"+cname);
+        System.out.println("传入对象"+gender);
+        System.out.println("传入对象"+cellphone);
+        System.out.println("传入对象"+email);
+        System.out.println("传入servlet的pc值为" + pc);
+        List<Customer> list = null;
+        list = customerService.query(customer,pc);
+        long count = customerService.queryCount(customer);
+        int pagenum = (int)count;
+        pagenum = pagenum%10==0?pagenum/10:pagenum/10+1;
         req.setAttribute("crmsList",list);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("jsp/list.jsp");
+        req.setAttribute("pc",pc);
+        req.setAttribute("querycrms",customer);
+        req.setAttribute("pagenum",pagenum);
+
+
+        RequestDispatcher dispatcher = req.getRequestDispatcher("jsp/querylist.jsp");
         dispatcher.forward(req,resp);
     }
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        /**
+         * 1条件封装成对象 最多四个
+         * 2调用方法完成查询
+         * 3保存查询结果到request域
+         * 4转发至jsp
+         */
+        String pc = req.getParameter("pc");
+
+        String cname = req.getParameter("cname");
+        String gender = req.getParameter("gender");
+        String email = req.getParameter("email");
+        String cellphone = req.getParameter("cellphone");
+        Customer customer = new Customer(cname,gender,cellphone,email);
+
+
+        System.out.println("传入对象"+cname);
+        System.out.println("传入对象"+gender);
+        System.out.println("传入对象"+cellphone);
+        System.out.println("传入对象"+email);
+        System.out.println("传入servlet的pc值为" + pc);
+        List<Customer> list = null;
+        list = customerService.query(customer,pc);
+        long count = customerService.queryCount(customer);
+        req.setAttribute("crmsList",list);
+        req.setAttribute("pc",pc);
+        req.setAttribute("querycrms",customer);
+
+
+        RequestDispatcher dispatcher = req.getRequestDispatcher("jsp/querylist.jsp");
+        dispatcher.forward(req,resp);
+    }
+
 }

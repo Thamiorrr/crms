@@ -5,6 +5,7 @@ import com.bh.crms.pojo.Customer;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -31,15 +32,26 @@ public class CustomerDao {
 
     }
 
-    public List<Customer> findAll(){
-        String sql = "select * from tb_customer where enable = '1'";
+    public List<Customer> findAll(String pc){
+        String sql = "select * from tb_customer where enable = '1' limit ?,?";
+        int pcint = Integer.valueOf(pc);
         List<Customer> list = null;
         try {
-            list = qr.query(sql, new BeanListHandler<Customer>(Customer.class));
+            list = qr.query(sql, new BeanListHandler<Customer>(Customer.class),(pcint-1)*10,10);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return list;
+    }
+    public long findAllCount(){
+        String sql = "select count(cid) from tb_customer where enable = '1'";
+        long count = -1;
+        try {
+            count = qr.query(sql,new ScalarHandler<>());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return count;
     }
 
     public Customer load(String cid){
@@ -76,16 +88,19 @@ public class CustomerDao {
         }
     }
 
-    public List query(Customer c){
+    public List query(Customer c,String pc){
 //        String sql = "select * from tb_customer as t where(t.cname like ? or ? ='') and (t.gender = ? or ? ='')" +
 //                "and (t.cellphone = ? or  ? ='') and (t.email = ? or ? ='') and enable = 1 ";
         String sql = "select * from tb_customer as t where(t.cname like ? or ? ='')and (t.gender = ? or ? ='')\n" +
-                "and (t.cellphone = ? or  ? ='') and (t.email = ? or ? ='') and enable = 1";
+                "and (t.cellphone = ? or  ? ='') and (t.email = ? or ? ='') and enable = 1 limit ?,? ";
+        int pcint = Integer.valueOf(pc);
+
         Object[] objects = {
                 "%"+c.getCname().trim()+"%",c.getCname().trim(),
                 c.getGender().trim(),c.getGender().trim(),
                 c.getCellphone().trim(), c.getCellphone().trim(),
-                c.getEmail().trim(),c.getEmail().trim()
+                c.getEmail().trim(),c.getEmail().trim(),
+                (pcint-1)*10,10
         };
 //        System.out.println(objects[0]+"要执行的搜索条件！");
 //        System.out.println(objects[1]+"要执行的搜索条件！");
@@ -107,5 +122,22 @@ public class CustomerDao {
 //
 //        System.out.println(customerList.get(0).getCname());
         return customerList;
+    }
+    public long queryCount(Customer c){
+        String sql = "select count(cid) from tb_customer as t where(t.cname like ? or ? ='')and (t.gender = ? or ? ='')\n" +
+                "and (t.cellphone = ? or  ? ='') and (t.email = ? or ? ='') and enable = 1";
+        Object[] objects = {
+                "%"+c.getCname().trim()+"%",c.getCname().trim(),
+                c.getGender().trim(),c.getGender().trim(),
+                c.getCellphone().trim(), c.getCellphone().trim(),
+                c.getEmail().trim(),c.getEmail().trim()
+        };
+        long count = -1;
+        try {
+            count = qr.query(sql, new ScalarHandler<>(),objects);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return count;
     }
 }

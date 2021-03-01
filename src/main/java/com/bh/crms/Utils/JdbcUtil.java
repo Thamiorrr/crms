@@ -15,24 +15,24 @@ import java.util.Properties;
  * @Data 2021/1/22 15:14
  */
 public class JdbcUtil {
-    @Test
-    public static String readProperties(String key){
-        //创建properties对象
-        Properties properties= new Properties();
-        String vaule = null;
-//        InputStream js = JdbcUtil.class.getClassesLoader()
-        try {
-            properties = PropertiesLoaderUtils.loadAllProperties("jdbcconfig.properties");
-            //根据入参查找
-            vaule = properties.getProperty(key);
-        } catch (IOException e) {
-            System.out.println("加载配置文件失败!!!");
-        } catch (NullPointerException npe) {
-            System.out.println("文件路径有误");
-        }
-        //返回值
-        return vaule;
-    }
+//    @Test
+//    public static String readProperties(String key){
+//        //创建properties对象
+//        Properties properties= new Properties();
+//        String vaule = null;
+////        、、InputStream js = JdbcUtil.class.getClassesLoader()
+//        try {
+//            properties = PropertiesLoaderUtils.loadAllProperties("jdbcconfig.properties");
+//            //根据入参查找
+//            vaule = properties.getProperty(key);
+//        } catch (IOException e) {
+//            System.out.println("加载配置文件失败!!!");
+//        } catch (NullPointerException npe) {
+//            System.out.println("文件路径有误");
+//        }
+//        //返回值
+//        return vaule;
+//    }
     private static DataSource dataSource = new ComboPooledDataSource();
     @Test
     public static Connection getConnection() throws SQLException {
