@@ -59,9 +59,51 @@
 	<a href="<c:url value='/findall?pc=${pc-1}'/>">上一页</a>
 	<a href="<c:url value='/findall?pc=${pc+1}'/>">下一页</a>
 	<span>总页面： ${pagenum}</span>>
-
-
 	<span>当前页面： ${pc}</span>>
+	第${pb.pc}页/共${pb.tp}页
+<a href="${pb.url}&pc=1">首页</a>
+<c:choose>
+	<c:when test="${pb.pc eq 1}">上一页</c:when>
+	<c:otherwise>
+		<a href="${pb.url}&pc=${pb.pc-1}">上一页</a>
+	</c:otherwise>
+</c:choose>
+<c:choose>
+	<c:when test="${pb.tp<=10}">
+		<c:set var="begin" value="1"/>
+		<c:set var="end" value="${pb.tp}"/>
+	</c:when>
+	<c:otherwise>
+		<c:set var="begin" value="${pb.pc-4}"/>
+		<c:set var="end" value="${pb.pc+5}"/>
+		<c:choose>
+			<c:when test="${begin<1}">
+				<c:set var="begin" value="1"/>
+				<c:set var="end" value="10"/>
+			</c:when>
+			<c:when test="${end>pb.tp}">
+				<c:set var="begin" value="${pb.tp-9}"/>
+				<c:set var="end" value="${pb.tp}"/>
+			</c:when>
+		</c:choose>
+	</c:otherwise>
+</c:choose>
+<c:forEach begin="${begin }" end="${end }" var="i">
+	<c:choose>
+		<c:when test="${i==pb.pc}">${i}</c:when>
+		<c:otherwise>
+			<a href="${pb.url}&pc=${i}">${i}</a>
+		</c:otherwise>
+	</c:choose>
+</c:forEach>
 
+<c:choose>
+	<c:when test="${pb.pc eq pb.tp}">下一页</c:when>
+	<c:otherwise>
+		<a href="${pb.url}&pc=${pb.pc+1}">下一页</a>
+	</c:otherwise>
+</c:choose>
+
+<a href="${pb.url}&pc=${pb.tp}">尾页</a>
   </body>
 </html>

@@ -1,5 +1,6 @@
 package com.bh.crms.servlet;
 
+import com.bh.crms.domain.PageBean;
 import com.bh.crms.pojo.Customer;
 import service.CustomerService;
 
@@ -23,12 +24,39 @@ public class FindAllServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String pc = req.getParameter("pc");
+        //获取当前页码
+        String pagecode = req.getParameter("pc");
+        int pc = 1;
+        if (pagecode != null && !pagecode.trim().isEmpty()) {
+            pc = Integer.parseInt(pagecode);
+        }
 
-        List<Customer> list = null;
+        //获取URL
+        String url = req.getRequestURI() + "?" + req.getQueryString();
+        System.out.println("url00000:"+url);
+
+        int lastIndex = url.lastIndexOf("&pc=");
+        if (lastIndex != -1){
+            url = url.substring(0,lastIndex);
+            System.out.println("ifffff");
+        }
+        System.out.println("url00000:"+url);
+
+        //获取总记录数
         long count = -1;
-        list = customerService.findAll(pc);
         count = customerService.findAllCount();
+        int tr = (int)count;
+        //每页记录数
+        int ps = 10;
+        //创建pagebean
+        PageBean<Customer> pb = new PageBean<>(pc,tr,ps);
+        pb.setUrl(url);
+        //获取当页记录
+        List<Customer> list = null;
+        list = customerService.findAll(pagecode);
+        pb.setBeanList(list);
+        req.setAttribute("pb",pb);
+
         int pagenum = (int)count;
         pagenum = pagenum%10==0?pagenum/10:pagenum/10+1;
         req.setAttribute("crmsList",list);

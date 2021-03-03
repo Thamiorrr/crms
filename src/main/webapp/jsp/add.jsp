@@ -51,7 +51,7 @@
 	
 </script>
 <style type="text/css">
-	.error {color:red;}
+	.error {color: #ff0000;}
 </style>
   </head>
   
